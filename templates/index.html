@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Good Deeds Tracker</title>
+  <style>
+    body {
+      background: #12121c;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #1f1f2e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    }
+    h1, h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logout-btn {
+      float: right;
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      background: #2a2a3d;
+      color: white;
+      margin-bottom: 15px;
+    }
+    label {
+      margin-right: 20px;
+      font-size: 16px;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 6px;
+    }
+    .form-section {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-section button {
+      background: #007bff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+      font-size: 15px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    td {
+      background-color: #2c2c3f;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form action="/logout">
+      <button type="submit" class="logout-btn">Logout</button>
+    </form>
+    <h1>🌟 Good Deeds Tracker</h1>
+
+    <div class="form-section">
+      <h2>What good deed did you do today?</h2>
+      <form action="/add" method="POST">
+        <textarea name="description" placeholder="Describe your good deed..." required></textarea>
+        <div>
+          <label><input type="checkbox" name="quran_read"> 📖 Read the Quran</label>
+          <label><input type="checkbox" name="prayers_offered"> 🕌 Offered all 5 prayers</label>
+          <label><input type="checkbox" name="tahajjud_offered"> 🌙 Offered Tahajjud</label>
+        </div><br>
+        <button type="submit">✅ Add Good Deed</button>
+      </form>
+    </div>
+
+    <h2>📅 Your Good Deeds</h2>
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Good Deed</th>
+        <th>Quran Read</th>
+        <th>Prayers Offered</th>
+        <th>Tahajjud</th>
+      </tr>
+      {% for deed in deeds %}
+      <tr>
+        <td>{{ deed.date.strftime('%Y-%m-%d') }}</td>
+        <td>{{ deed.description }}</td>
+        <td>{% if deed.quran_read %} ✅ {% else %} ❌ {% endif %}</td>
+        <td>{% if deed.prayers_offered %} ✅ {% else %} ❌ {% endif %}</td>
+        <td>{% if deed.tahajjud_offered %} ✅ {% else %} ❌ {% endif %}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>
